@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const loginDTO = { email:email, password:password };
+    const loginDTO = { email: email, password: password };
 
     try {
       const response = await axios.post(`${API_URL}/auth/login`, loginDTO, {
@@ -45,10 +45,14 @@ const Login = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white shadow-xl rounded-lg h-auto min-h-[450px]">
-        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Đăng Nhập</h2>
+        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
+          Đăng Nhập
+        </h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-gray-600 text-sm font-medium mb-1">Email</label>
+            <label className="block text-gray-600 text-sm font-medium mb-1">
+              Email
+            </label>
             <input
               type="email"
               required
@@ -59,7 +63,9 @@ const Login = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-600 text-sm font-medium mb-1">Mật khẩu</label>
+            <label className="block text-gray-600 text-sm font-medium mb-1">
+              Mật khẩu
+            </label>
             <input
               type="password"
               required
@@ -78,11 +84,12 @@ const Login = () => {
         </form>
         <p className="mt-4 text-sm text-center">
           Chưa có tài khoản?{" "}
-          <Link to={"/register"} className="text-blue-600 hover:underline">Đăng ký</Link>
+          <Link to={"/register"} className="text-blue-600 hover:underline">
+            Đăng ký
+          </Link>
         </p>
       </div>
-      <ToastContainer
-/>
+      <ToastContainer />
     </div>
   );
 };

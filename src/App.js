@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import ExamPage from "./pages/ExamPage ";
-import QuizDetail from "./pages/QuizDetail";
+import ListQuizPage from "./pages/ListQuizPage";
 import Test from "./pages/Test";
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/test" element={<ExamPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/quiz/:id" element={<QuizDetail/>}/>
+        <Route path="/topic/:idTopic" element={<ListQuizPage/>}/>
         <Route path="/test" element={<Test />} />
       </Routes>
     </Router>

@@ -1,17 +1,26 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../../config";
 const Header = () => {
+  const navigate = useNavigate();
   const [isopen, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [code, setCode]= useState("");
   const handleOpenDropDown = () => {
     setOpen(!isopen);
   };
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-    
+      const response = await axios.get(`${API_URL}/find/${code}`);
+      if (response.status === 200) {
+        const id=response.data;
+        navigate(`/quiz-detail/${id}`);
+      }
     } catch (error) {
-        
+      console.error("API Error:", error);
+      if (error.response) console.error("Error Data:", error.response.data);
     }
   };
 
@@ -32,8 +41,10 @@ const Header = () => {
               className="w-full pr-5 focus:outline-none text-base"
               maxLength={6}
               minLength={6}
+              value={code}
+              onChange={(e)=>setCode(e.target.value)}
             />
-            <button className="absolute right-3">
+            <button className="absolute right-3" onSubmit={handleSearch}>
               <i className="fa fa-search text-black"></i>
             </button>
           </div>

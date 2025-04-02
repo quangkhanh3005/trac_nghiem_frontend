@@ -3,16 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-
-
 import ExamPage from "./pages/ExamPage ";
-
 import QuizDetail from "./pages/QuizDetail";
 import Test from "./pages/Test";
-
-import ExamPage from "./pages/ExamPage ";
-
-
 function App() {
   return (
     <Router>

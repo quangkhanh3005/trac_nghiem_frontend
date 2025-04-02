@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-<<<<<<< HEAD
+
 import ExamPage from "./pages/ExamPage ";
-=======
+
 import QuizDetail from "./pages/QuizDetail";
 import Test from "./pages/Test";
->>>>>>> 45326df (Cập nhật giao diện và cấu trúc component)
+
 
 function App() {
   return (

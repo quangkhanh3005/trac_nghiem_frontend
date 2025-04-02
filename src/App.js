@@ -3,7 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
+<<<<<<< HEAD
 import ExamPage from "./pages/ExamPage ";
+=======
+import QuizDetail from "./pages/QuizDetail";
+import Test from "./pages/Test";
+>>>>>>> 45326df (Cập nhật giao diện và cấu trúc component)
 
 function App() {
   return (
@@ -13,6 +18,8 @@ function App() {
         <Route path="/test" element={<ExamPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/quiz/:id" element={<QuizDetail/>}/>
+        <Route path="/test" element={<Test />} />
       </Routes>
     </Router>
   );

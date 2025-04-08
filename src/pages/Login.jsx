@@ -22,7 +22,7 @@ const Login = () => {
       if (response.status === 200) {
         toast.success("Đăng nhập thành công!", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
@@ -31,6 +31,8 @@ const Login = () => {
           theme: "light",
           transition: Bounce,
         });
+        const userid=response.data.id;
+        sessionStorage.setItem("idUser",userid);
         setTimeout(() => navigate("/"), 2000);
       }
     } catch (error) {

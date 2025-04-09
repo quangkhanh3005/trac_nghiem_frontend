@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserLayout from "../layouts/UserLayout";
 import axios from "axios";
 import { API_URL } from "../config";
+import { Link } from "react-router-dom";
 const Home = () => {
   const [topics, setTopics] = useState([]);
   useEffect(() => {
@@ -30,7 +31,9 @@ const Home = () => {
     <ul className="space-y-3">
       {topics.map((topic) => (
         <li key={topic.id} className="p-4 bg-gray-100 rounded shadow">
+          <Link to={`/topic/${topic.id}`}>
           {topic.name}
+          </Link>
         </li>
       ))}
     </ul>

@@ -15,7 +15,7 @@ const UserLayout = ({ children }) => {
         <Header />
 
         {/* Main content */}
-        <main className="flex-1 bg-gray-100 p-6">{children}</main>
+        <main className="flex-1 bg-slate-100">{children}</main>
 
         {/* Footer */}
         <Footer />

@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-import ExamPage from "./pages/ExamPage ";
-
-import Test from "./pages/Test";
 import TopicQuizListPage from "./pages/TopicQuizListPage";
 import QuizDetailPage from "./pages/QuizDetailPage";
 import PrivateRoute from "./components/PrivateRoute";
 import LibrariesPage from "./pages/LibrariesPage";
+import ListResultQuizPage from "./pages/ListResultQuizPage";
+import QuizResultDetailPage from "./pages/QuizResultDetailPage";
+import HistoryPage from "./pages/HistoryPage";
 function App() {
   return (
     <Router>
@@ -18,10 +18,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/topic/:idTopic" element={<PrivateRoute><TopicQuizListPage/></PrivateRoute>}/>
-        <Route path="/test" element={<Test />} />
         <Route path="/quiz/:idQuiz" element={<PrivateRoute><QuizDetailPage/></PrivateRoute>}/>
-        <Route path="/exam/:idQuiz" element={<PrivateRoute><ExamPage/></PrivateRoute>}/>
         <Route path="/libraries" element={<PrivateRoute><LibrariesPage/></PrivateRoute>}/>
+        <Route path="/quiz-result/:idQuiz" element={<PrivateRoute><ListResultQuizPage/></PrivateRoute>}/>
+        <Route path="/quiz-result/detail/:idQuizResult" element={<PrivateRoute><QuizResultDetailPage /></PrivateRoute>} />
+        <Route path="/history/:idUser" element={<PrivateRoute><HistoryPage/></PrivateRoute>}/>
       </Routes>
     </Router>
   );

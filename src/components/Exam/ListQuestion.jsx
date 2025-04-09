@@ -37,19 +37,19 @@ export default function ListQuestion({
     <div className="bg-white p-6 w-full rounded-lg shadow-lg min-h-screen mx-auto flex flex-col justify-between">
       <div className="flex flex-col items-center">
         <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">
-          Câu {currentQuestionIndex + 1}: {item.question}
+          Câu {currentQuestionIndex + 1}: {item.content}
         </h3>
 
-        {item.img && item.img !== "" && (
+        {item.image && item.image !== "" && (
           <div className="mb-6">
             <img
-              src={`http://localhost:8080${item.img}`}
+              src={`http://localhost:8080${item.image}`}
               className="max-h-64 w-auto rounded-lg shadow-md object-contain"
               alt={`Hình ảnh cho câu hỏi ${currentQuestionIndex + 1}`}
               onError={(e) => {
                 e.target.style.display = "none";
                 console.error(
-                  `Không tải được ảnh: http://localhost:8080${item.img}`
+                  `Không tải được ảnh: http://localhost:8080${item.image}`
                 );
               }}
             />

@@ -10,6 +10,10 @@ const Header = () => {
   const [isopen, setOpen] = useState(false);
   const [code, setCode] = useState("");
   const idUser=sessionStorage.getItem("idUser");
+  const handleLogOut=()=>{
+    sessionStorage.removeItem("idUser");
+    navigate("/login");
+  }
   const handleOpenDropDown = () => {
     setOpen(!isopen);
   };
@@ -71,7 +75,7 @@ const Header = () => {
                   <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">Profile</li>
                   <Link to={`/history/${idUser}`}><li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">History</li></Link>
                   <Link to={"/libraries"}><li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">Libraries</li></Link>
-                  <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">Logout</li>
+                  <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer" onClick={()=>handleLogOut()}>Logout</li>
                 </ul>
               </div>
             )}

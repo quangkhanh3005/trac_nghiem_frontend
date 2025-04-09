@@ -10,19 +10,70 @@ import LibrariesPage from "./pages/LibrariesPage";
 import ListResultQuizPage from "./pages/ListResultQuizPage";
 import QuizResultDetailPage from "./pages/QuizResultDetailPage";
 import HistoryPage from "./pages/HistoryPage";
+import Exam from "./components/Exam/Exam";
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/topic/:idTopic" element={<PrivateRoute><TopicQuizListPage/></PrivateRoute>}/>
-        <Route path="/quiz/:idQuiz" element={<PrivateRoute><QuizDetailPage/></PrivateRoute>}/>
-        <Route path="/libraries" element={<PrivateRoute><LibrariesPage/></PrivateRoute>}/>
-        <Route path="/quiz-result/:idQuiz" element={<PrivateRoute><ListResultQuizPage/></PrivateRoute>}/>
-        <Route path="/quiz-result/detail/:idQuizResult" element={<PrivateRoute><QuizResultDetailPage /></PrivateRoute>} />
-        <Route path="/history/:idUser" element={<PrivateRoute><HistoryPage/></PrivateRoute>}/>
+        <Route
+          path="/topic/:idTopic"
+          element={
+            <PrivateRoute>
+              <TopicQuizListPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/quiz/:idQuiz"
+          element={
+            <PrivateRoute>
+              <QuizDetailPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/libraries"
+          element={
+            <PrivateRoute>
+              <LibrariesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/quiz-result/:idQuiz"
+          element={
+            <PrivateRoute>
+              <ListResultQuizPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/quiz-result/detail/:idQuizResult"
+          element={
+            <PrivateRoute>
+              <QuizResultDetailPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/history/:idUser"
+          element={
+            <PrivateRoute>
+              <HistoryPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/test" element={<Exam />} />
       </Routes>
     </Router>
   );

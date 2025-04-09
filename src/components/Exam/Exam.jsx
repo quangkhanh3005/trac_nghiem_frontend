@@ -49,7 +49,11 @@ export default function Exam() {
   const handleTimeUp = () => {
     if (!isTimeUp) {
       setIsTimeUp(true);
-      // Không gọi handleSubmit trực tiếp ở đây nữa
+      const autoSubmitTimer = setTimeout(() => {
+        setIsTimeUp(false);
+        handleSubmit();
+      }, 2000);
+      return () => clearTimeout(autoSubmitTimer);
     }
   };
 
@@ -65,6 +69,7 @@ export default function Exam() {
   };
 
   const handleSubmit = async () => {
+    // Tạo mảng answers từ tất cả câu hỏi trong listQuestion
     const answersArray = listQuestion.map((question) => ({
       idQuestion: question.id,
       idAnswerSelected: listAnswer[question.id] || null,
@@ -72,7 +77,7 @@ export default function Exam() {
 
     const submissionData = {
       idQuiz: idQuiz || 1,
-      idUser: 1,
+      idUser: 1, // Thêm idUser vào body
       answers: answersArray,
     };
 
@@ -96,12 +101,12 @@ export default function Exam() {
         autoClose: 2000,
       });
     }
-    setIsTimeUp(false); // Đặt lại trạng thái sau khi nộp
+    setIsTimeUp(false);
   };
 
   const handleModalSubmit = () => {
     setIsTimeUp(false);
-    handleSubmit(); // Gọi nộp bài khi bấm OK
+    handleSubmit();
   };
 
   const handleQuestionSelect = (index) => {
@@ -109,9 +114,8 @@ export default function Exam() {
   };
 
   return (
-    <div className="bg-gray-200 p-4 md:p-8 flex flex-col md:grid md:grid-cols-12 gap-4">
-      {/* List Question */}
-      <div className="md:col-span-9 h-auto md:h-screen overflow-y-auto no-scrollbar">
+    <div className="bg-gray-200 p-8 grid grid-cols-12 gap-4">
+      <div className="col-span-9 h-screen overflow-y-auto no-scrollbar">
         <ListQuestion
           listQuestion={listQuestion}
           onAnswerSelect={handleAnswerSelect}
@@ -127,9 +131,7 @@ export default function Exam() {
           }
         />
       </div>
-
-      {/* Sidebar */}
-      <div className="md:col-span-3 md:sticky md:top-0 h-auto md:h-screen">
+      <div className="col-span-3 sticky top-0 h-screen">
         <Sidebar
           listQuestion={listQuestion}
           answeredQuestions={answeredQuestions}
@@ -140,13 +142,17 @@ export default function Exam() {
         />
       </div>
 
-      {/* Modal khi hết thời gian */}
       {isTimeUp && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3 className="text-lg font-semibold mb-4">Hết thời gian!</h3>
-            <p className="mb-4">Nhấn OK để nộp bài ngay lập tức.</p>
-            <button onClick={handleModalSubmit} className="modal-button">
+            <p className="mb-4">Bài của bạn sẽ tự động gửi sau 2 giây.</p>
+            <button
+              onClick={() => {
+                handleModalSubmit();
+              }}
+              className="modal-button w-full"
+            >
               OK
             </button>
           </div>

@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import "./Style/Exam.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Exam() {
   const [listQuestion, setListQuestion] = useState([]);
@@ -13,7 +13,7 @@ export default function Exam() {
   const [listAnswer, setListAnswer] = useState({});
   const [time, setTime] = useState(10);
   const [isTimeUp, setIsTimeUp] = useState(false);
-  const idQuiz = sessionStorage.getItem("idQuiz");
+  const { idQuiz } = useParams();
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -21,7 +21,7 @@ export default function Exam() {
     const fetchList = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/question/id-quiz/1`
+          `http://localhost:8080/question/id-quiz/${idQuiz}`
         );
         setListQuestion(response.data);
       } catch (error) {

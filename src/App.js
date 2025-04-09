@@ -73,7 +73,7 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/test" element={<Exam />} />
+        <Route path="/exam/:idQuiz" element={<Exam />} />
       </Routes>
     </Router>
   );

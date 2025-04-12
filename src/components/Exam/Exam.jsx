@@ -5,23 +5,24 @@ import Sidebar from "./Sidebar";
 import "./Style/Exam.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Exam() {
   const [listQuestion, setListQuestion] = useState([]);
   const [answeredQuestions, setAnsweredQuestions] = useState({});
   const [listAnswer, setListAnswer] = useState({});
-  const [time, setTime] = useState(6); // Thời gian ban đầu là 6 giây
-  const [isTimeUp, setIsTimeUp] = useState(false); // Trạng thái để hiển thị modal
-  const idQuiz = sessionStorage.getItem("idQuiz");
+  const [time, setTime] = useState(10);
+  const [isTimeUp, setIsTimeUp] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { idQuiz } = useParams();
   const navigate = useNavigate();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  // Lấy danh sách câu hỏi từ backend
   useEffect(() => {
     const fetchList = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/question/id-quiz/1`
+          `http://localhost:8080/question/id-quiz/${idQuiz}`
         );
         setListQuestion(response.data);
       } catch (error) {
@@ -29,33 +30,11 @@ export default function Exam() {
       }
     };
     fetchList();
-  }, []);
+  }, [idQuiz]);
 
-  // Quản lý đếm ngược thời gian
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer); // Dừng đếm ngược khi time về 0
-          handleTimeUp(); // Gọi hàm xử lý khi hết giờ
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer); // Dọn dẹp timer khi unmount
-  }, []); // Chỉ chạy một lần khi mount
-
-  // Xử lý khi hết giờ
   const handleTimeUp = () => {
-    if (!isTimeUp) {
-      setIsTimeUp(true); // Hiển thị modal
-      const autoSubmitTimer = setTimeout(() => {
-        setIsTimeUp(false); // Tắt modal sau 2 giây
-        handleSubmit(); // Gửi bài
-      }, 2000);
-      return () => clearTimeout(autoSubmitTimer); // Dọn dẹp (không cần thiết lắm vì chỉ chạy một lần)
+    if (!isTimeUp && !isSubmitted) {
+      setIsTimeUp(true);
     }
   };
 
@@ -71,25 +50,29 @@ export default function Exam() {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitted) return;
+
+    setIsSubmitted(true);
+    const answersArray = listQuestion.map((question) => ({
+      idQuestion: question.id,
+      idAnswerSelected: listAnswer[question.id] || null,
+    }));
+
     const submissionData = {
       idQuiz: idQuiz || 1,
-      answers: listAnswer,
+      idUser: 1,
+      answers: answersArray,
     };
-    console.log("Dữ liệu gửi đi:", submissionData);
 
     try {
       const response = await axios.post(
         "http://localhost:8080/quiz/submit",
-        submissionData,
-        {
-          params: { idUser: 1 },
-        }
+        submissionData
       );
-      console.log("Nộp bài thành công:", response.data);
       toast.success("Nộp bài thành công!", {
         position: "top-center",
         autoClose: 2000,
-        onClose: () => navigate("/"), // Chuyển hướng sau khi toast đóng
+        onClose: () => navigate("/"),
       });
     } catch (error) {
       console.log("Nộp bài thất bại:", error);
@@ -97,47 +80,50 @@ export default function Exam() {
         position: "top-center",
         autoClose: 2000,
       });
+      setIsSubmitted(false);
     }
-    setIsTimeUp(false); // Đảm bảo modal tắt sau khi gửi
+    setIsTimeUp(false);
   };
 
-  // Xử lý khi nhấn OK trên modal
   const handleModalSubmit = () => {
-    setIsTimeUp(false); // Tắt modal ngay khi nhấn OK
-    handleSubmit(); // Gửi bài ngay lập tức
+    setIsTimeUp(false);
+    handleSubmit();
+  };
+
+  const handleQuestionSelect = (index) => {
+    setCurrentQuestionIndex(index);
   };
 
   return (
-    <div className="bg-gray-200 p-8 grid grid-cols-12 gap-4">
-      <div className="col-span-9 h-screen overflow-y-auto no-scrollbar">
-        <ListQuestion
-          listQuestion={listQuestion}
-          onAnswerSelect={handleAnswerSelect}
-          listAnswer={listAnswer}
-        />
+    <div className="bg-gray-100 p-2 md:p-4 flex flex-col md:flex-row gap-4 min-h-screen">
+      <div className="w-full md:w-3/4 flex flex-col flex-grow overflow-hidden">
+        <div className="flex-grow">
+          <ListQuestion
+            listQuestion={listQuestion}
+            onAnswerSelect={handleAnswerSelect}
+            listAnswer={listAnswer}
+            currentQuestionIndex={currentQuestionIndex}
+            onPrev={() =>
+              setCurrentQuestionIndex((prev) => Math.max(prev - 1, 0))
+            }
+            onNext={() =>
+              setCurrentQuestionIndex((prev) =>
+                Math.min(prev + 1, listQuestion.length - 1)
+              )
+            }
+          />
+        </div>
       </div>
-      <div className="col-span-3 sticky top-0 h-screen">
+      <div className="w-full md:w-1/4 md:h-screen md:sticky top-0">
         <Sidebar
           listQuestion={listQuestion}
           answeredQuestions={answeredQuestions}
           onSubmit={handleSubmit}
           time={time}
+          onQuestionSelect={handleQuestionSelect}
+          currentQuestionIndex={currentQuestionIndex}
         />
       </div>
-
-      {isTimeUp && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3 className="text-lg font-semibold mb-4">Hết thời gian!</h3>
-            <p className="mb-4">Bài của bạn sẽ tự động gửi sau 2 giây.</p>
-            <button onClick={handleModalSubmit} className="modal-button">
-              OK
-            </button>
-          </div>
-        </div>
-      )}
-
-      <ToastContainer />
     </div>
   );
 }

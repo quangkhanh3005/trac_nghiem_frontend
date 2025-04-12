@@ -51,7 +51,7 @@ const QuizResultDetailPage = () => {
         </p>
         <p className="text-xl font-normal">
           Ngày Nộp:&nbsp;
-          {new Date(result.submitted_at).toLocaleString("vi-VN")}
+          {new Date(result.submittedAt).toLocaleString("vi-VN")}
         </p>
 
         <hr className="my-4" />

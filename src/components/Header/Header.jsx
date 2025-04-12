@@ -6,8 +6,13 @@ import { toast } from "react-toastify";
 const Header = () => {
   const navigate = useNavigate();
   const [isopen, setOpen] = useState(false);
+
   const [search, setSearch] = useState("");
   const [code, setCode]= useState("");
+
+  const [code, setCode] = useState("");
+  const idUser = sessionStorage.getItem("idUser");
+
   const handleOpenDropDown = () => {
     setOpen(!isopen);
   };
@@ -75,12 +80,25 @@ const Header = () => {
                   <li className="px-4 py-2 hover:bg-gray-100">
                     <Link to="/profile">Profile</Link>
                   </li>
+
                   <li className="px-4 py-2 hover:bg-gray-100">
                     <Link to="/listQuiz">History</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
                     Settings
                   </li>
+
+                  <Link to={`/history/${idUser}`}>
+                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
+                      History
+                    </li>
+                  </Link>
+                  <Link to={"/libraries"}>
+                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
+                      Libraries
+                    </li>
+                  </Link>
+
                   <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
                     Logout
                   </li>

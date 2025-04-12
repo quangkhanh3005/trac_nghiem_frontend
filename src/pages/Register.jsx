@@ -5,7 +5,7 @@ import { API_URL } from "../config";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -116,4 +116,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

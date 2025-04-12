@@ -6,16 +6,13 @@ import SlideBar from "../components/SlideBar/SlideBar";
 const UserLayout = ({ children }) => {
   return (
     <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <SlideBar />
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col ml-64">
+      <div className="flex-1 flex flex-col">
         {/* Header */}
         <Header />
 
         {/* Main content */}
-        <main className="flex-1 bg-gray-100 p-6">{children}</main>
+        <main className="flex-1 bg-gray-100">{children}</main>
 
         {/* Footer */}
         <Footer />

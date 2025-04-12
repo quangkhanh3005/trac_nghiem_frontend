@@ -37,7 +37,7 @@ const Header = () => {
       >
         <div className="flex items-center space-x-4 ml-auto">
           {/* Ô tìm kiếm */}
-          <div className="relative flex items-center border rounded-lg px-3 py-2 w-48 h-10">
+          <form className="relative flex items-center border rounded-lg px-3 py-2 w-48 h-10">
             {" "}
             {/* Thêm h-10 để cố định chiều cao */}
             <input

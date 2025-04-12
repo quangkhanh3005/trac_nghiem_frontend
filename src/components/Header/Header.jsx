@@ -2,35 +2,25 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { toast } from "react-toastify";
 const Header = () => {
   const navigate = useNavigate();
   const [isopen, setOpen] = useState(false);
-
   const [search, setSearch] = useState("");
   const [code, setCode]= useState("");
-
-  const idUser = sessionStorage.getItem("idUser");
-  const role = sessionStorage.getItem("role") == "ADMIN" ? true : false;
   const handleOpenDropDown = () => {
     setOpen(!isopen);
   };
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`${API_URL}/quiz/find/${code}`);
+      const response = await axios.get(`${API_URL}/find/${code}`);
       if (response.status === 200) {
-        const id=response.data;
+        const id = response.data;
         navigate(`/quiz-detail/${id}`);
       }
     } catch (error) {
-      if (error.response?.status === 400) {
-        toast.error("Không tìm thấy!", {
-          position: "top-right",
-          autoClose: 2000,
-        });
-      }
       console.error("API Error:", error);
+      if (error.response) console.error("Error Data:", error.response.data);
     }
   };
 
@@ -47,7 +37,7 @@ const Header = () => {
       >
         <div className="flex items-center space-x-4 ml-auto">
           {/* Ô tìm kiếm */}
-          <form className="relative flex items-center border rounded-lg px-3 py-2 w-48 h-10">
+          <div className="relative flex items-center border rounded-lg px-3 py-2 w-48 h-10">
             {" "}
             {/* Thêm h-10 để cố định chiều cao */}
             <input
@@ -59,16 +49,14 @@ const Header = () => {
               value={code}
               onChange={(e) => setCode(e.target.value)}
             />
-            <button className="absolute right-3" onSubmit={handleSearch}>
-              <i className="fa fa-search text-black"></i>
+            <button type="submit" className="absolute right-3">
+              <i className="fa fa-search text-gray-600"></i>
             </button>
           </form>
 
 
-          {/* Icon user và dropdown */}
-          <div className="relative flex items-center h-10">
-            {" "}
-            {/* Thêm h-10 để căn chỉnh với ô tìm kiếm */}
+          {/* User dropdown */}
+          <div className="relative">
             <button onClick={handleOpenDropDown} className="flex items-center">
               <i className="fa fa-user-circle text-2xl"></i>
               <i className="fa fa-chevron-down text-sm ml-1"></i>
@@ -83,30 +71,10 @@ const Header = () => {
                   <li className="px-4 py-2 hover:bg-gray-100">
                     <Link to="/listQuiz">History</Link>
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
-                    Settings
+                  <li className="px-4 py-2 hover:bg-gray-100">
+                    <Link to="/settings">Settings</Link>
                   </li>
-                  {role ? (
-                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
-                      Admin
-                    </li>
-                  ) : null}
-                  <Link to={`/history/${idUser}`}>
-                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
-                      History
-                    </li>
-                  </Link>
-                  <Link to={"/libraries"}>
-                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
-                      Libraries
-                    </li>
-                  </Link>
-                  <li
-                    className="px-4 py-2 hover:bg-gray-300 cursor-pointer"
-                    onClick={() => {
-                      // hanhdleLogout();
-                    }}
-                  >
+                  <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
                     Logout
                   </li>
                 </ul>
@@ -117,6 +85,42 @@ const Header = () => {
          
         </div>
       </nav>
+
+      {/* Mobile dropdown menu */}
+      {mobileMenuOpen && (
+        <div className="block lg:hidden px-4 pb-3 space-y-2">
+          <Link
+            to="/create-quiz"
+            className="block w-full text-center text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-sm font-semibold shadow"
+          >
+            + Tạo Câu Hỏi
+          </Link>
+          <Link
+            to="/profile"
+            className="block text-sm text-gray-700 hover:bg-gray-100 px-4 py-2 rounded"
+          >
+            Profile
+          </Link>
+          <Link
+            to="/listQuiz"
+            className="block text-sm text-gray-700 hover:bg-gray-100 px-4 py-2 rounded"
+          >
+            History
+          </Link>
+          <Link
+            to="/settings"
+            className="block text-sm text-gray-700 hover:bg-gray-100 px-4 py-2 rounded"
+          >
+            Settings
+          </Link>
+          <div
+            className="text-sm text-gray-700 hover:bg-gray-100 px-4 py-2 rounded cursor-pointer"
+            onClick={handleLogout}
+          >
+            Logout
+          </div>
+        </div>
+      )}
     </header>
   );
 };

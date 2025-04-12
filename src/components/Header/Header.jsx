@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../config";
+import { toast } from "react-toastify";
 const Header = () => {
   const navigate = useNavigate();
   const [isopen, setOpen] = useState(false);
@@ -68,7 +69,7 @@ const Header = () => {
               <i className="fa fa-user-circle text-2xl"></i>
               <i className="fa fa-chevron-down text-sm ml-1"></i>
             </button>
-            {isOpen && (
+            {isopen && (
               <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-50">
                 <ul className="py-2 text-sm text-gray-700">
                   <li className="px-4 py-2 hover:bg-gray-100">
@@ -88,12 +89,7 @@ const Header = () => {
             )}
           </div>
 
-          {/* Mobile menu toggle */}
-          <div className="lg:hidden">
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              <i className="fa fa-bars text-xl"></i>
-            </button>
-          </div>
+         
         </div>
       </nav>
     </header>

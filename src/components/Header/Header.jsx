@@ -10,7 +10,6 @@ const Header = () => {
   const [search, setSearch] = useState("");
   const [code, setCode]= useState("");
 
-  const [code, setCode] = useState("");
   const idUser = sessionStorage.getItem("idUser");
 
   const handleOpenDropDown = () => {

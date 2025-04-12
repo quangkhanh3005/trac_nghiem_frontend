@@ -3,96 +3,30 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-import TopicQuizListPage from "./pages/TopicQuizListPage";
-import QuizDetailPage from "./pages/QuizDetailPage";
-import PrivateRoute from "./components/PrivateRoute";
-import LibrariesPage from "./pages/LibrariesPage";
-import ListResultQuizPage from "./pages/ListResultQuizPage";
-import QuizResultDetailPage from "./pages/QuizResultDetailPage";
-import HistoryPage from "./pages/HistoryPage";
-import PrivateRouteAdmin from "./components/PrivateRouterAdmin";
-import QuizzPageAdmin from "./pages/Admin/QuizzPageAdmin";
-import AdminPage from "./pages/Admin/AdminPage";
-import Exam from "./components/Exam/Exam";
+import ListQuizPage from "./pages/ListQuizPage";
+import CreateQuiz from "./pages/CreateQuiz";
+import Question from "./pages/Question";
+import Setting from "./pages/Setting";
+import Profile from "./pages/Profile";
+import CreateQuestion from "./pages/CreateQuestion";
+import EditQuiz from "./pages/EditQuiz";
+import EditQuestion from "./pages/EditQuestion";
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/topic/:idTopic"
-          element={
-            <PrivateRoute>
-              <TopicQuizListPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/quiz/:idQuiz"
-          element={
-            <PrivateRoute>
-              <QuizDetailPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/libraries"
-          element={
-            <PrivateRoute>
-              <LibrariesPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/quiz-result/:idQuiz"
-          element={
-            <PrivateRoute>
-              <ListResultQuizPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/quiz-result/detail/:idQuizResult"
-          element={
-            <PrivateRoute>
-              <QuizResultDetailPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/history/:idUser"
-          element={
-            <PrivateRoute>
-              <HistoryPage />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/exam/:idQuiz" element={<Exam />} />
-        <Route
-          path="/admin"
-          element={
-            <PrivateRouteAdmin>
-              <AdminPage />
-            </PrivateRouteAdmin>
-          }
-        />
-        <Route
-          path="/admin/quizz"
-          element={
-            <PrivateRouteAdmin>
-              <QuizzPageAdmin />
-            </PrivateRouteAdmin>
-          }
-        />
+        <Route path="/topic/:idTopic" element={<ListQuizPage/>}/>
+        <Route path="/create-quiz" element={<CreateQuiz />} />
+        <Route path="/create-question" element={<CreateQuestion />} />
+        <Route path="/question/id-quiz/:idQuiz" element={<Question />} />
+        <Route path="/settings" element={<Setting />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-question/:idQuestion" element={<EditQuestion />} />
+        <Route path="/edit-quiz/:idQuiz" element={<EditQuiz />} />
       </Routes>
     </Router>
   );

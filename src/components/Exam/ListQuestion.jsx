@@ -4,25 +4,18 @@ export default function ListQuestion({
   listQuestion,
   onAnswerSelect,
   listAnswer,
-  currentQuestionIndex,
-  onPrev,
-  onNext,
 }) {
-  if (
-    !Array.isArray(listQuestion) ||
-    listQuestion.length === 0 ||
-    !listQuestion[currentQuestionIndex]
-  ) {
+  // Kiểm tra dữ liệu đầu vào
+  if (!Array.isArray(listQuestion) || listQuestion.length === 0) {
     return (
-      <div className="bg-white p-6 w-full rounded-lg shadow-lg min-h-screen mx-auto text-center text-red-500 font-semibold">
+      <div className="bg-white p-4 w-full rounded-lg min-h-screen mx-auto text-center text-red-500">
         Không có câu hỏi nào để hiển thị.
       </div>
     );
   }
 
-  const item = listQuestion[currentQuestionIndex];
-
   const handleRadioChange = (questionId, answerId) => {
+    // Kiểm tra xem questionId và answerId có hợp lệ không
     if (!questionId || !answerId) {
       console.error("questionId hoặc answerId không hợp lệ:", {
         questionId,
@@ -30,7 +23,7 @@ export default function ListQuestion({
       });
       return;
     }
-    onAnswerSelect(questionId, answerId);
+    onAnswerSelect(questionId, answerId); // Gửi cả questionId và answerId lên Exam
   };
 
   return (
@@ -87,6 +80,19 @@ export default function ListQuestion({
                   {answer.content}
                 </button>
               </div>
+              {item.img && item.img !== "" && (
+                <img
+                  src={`http://localhost:8080${item.img}`}
+                  className="h-auto w-1/2 justify-self-end object-contain"
+                  alt={`Hình ảnh cho câu hỏi ${index + 1}`}
+                  onError={(e) => {
+                    e.target.style.display = "none"; // Ẩn ảnh nếu lỗi
+                    console.error(
+                      `Không tải được ảnh: http://localhost:8080${item.img}`
+                    );
+                  }}
+                />
+              )}
             </div>
           ))}
         </div>

@@ -10,6 +10,9 @@ import LibrariesPage from "./pages/LibrariesPage";
 import ListResultQuizPage from "./pages/ListResultQuizPage";
 import QuizResultDetailPage from "./pages/QuizResultDetailPage";
 import HistoryPage from "./pages/HistoryPage";
+import PrivateRouteAdmin from "./components/PrivateRouterAdmin";
+import QuizzPageAdmin from "./pages/Admin/QuizzPageAdmin";
+import AdminPage from "./pages/Admin/AdminPage";
 import Exam from "./components/Exam/Exam";
 function App() {
   return (
@@ -74,6 +77,22 @@ function App() {
           }
         />
         <Route path="/exam/:idQuiz" element={<Exam />} />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRouteAdmin>
+              <AdminPage />
+            </PrivateRouteAdmin>
+          }
+        />
+        <Route
+          path="/admin/quizz"
+          element={
+            <PrivateRouteAdmin>
+              <QuizzPageAdmin />
+            </PrivateRouteAdmin>
+          }
+        />
       </Routes>
     </Router>
   );

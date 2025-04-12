@@ -9,9 +9,14 @@ const Header = () => {
   const navigate = useNavigate();
   const [isopen, setOpen] = useState(false);
   const [code, setCode] = useState("");
-  const idUser=sessionStorage.getItem("idUser");
+  const idUser = sessionStorage.getItem("idUser");
+  const role = sessionStorage.getItem("role") == "ADMIN" ? true : false;
   const handleOpenDropDown = () => {
     setOpen(!isopen);
+  };
+  const hanhdleLogout = () => {
+    sessionStorage.clear();
+    navigate("/login");
   };
 
   const handleSearch = async (e) => {
@@ -23,7 +28,7 @@ const Header = () => {
         navigate(`/quiz/${id}`);
       }
     } catch (error) {
-      if(error.response?.status===400){
+      if (error.response?.status === 400) {
         toast.error("Không tìm thấy!", {
           position: "top-right",
           autoClose: 2000,
@@ -63,15 +68,40 @@ const Header = () => {
           <div className="relative flex items-center h-10">
             <button onClick={handleOpenDropDown} className="flex items-center">
               <i className="fa fa-user-circle" style={{ fontSize: "32px" }}></i>
-              <i className="fa fa-angle-down px-2" style={{ fontSize: "20px" }}></i>
+              <i
+                className="fa fa-angle-down px-2"
+                style={{ fontSize: "20px" }}
+              ></i>
             </button>
             {isopen && (
               <div className="absolute right-1 mt-2 w-40 bg-white border rounded-lg shadow-lg top-full">
                 <ul className="py-2">
-                  <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">Profile</li>
-                  <Link to={`/history/${idUser}`}><li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">History</li></Link>
-                  <Link to={"/libraries"}><li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">Libraries</li></Link>
-                  <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">Logout</li>
+                  <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
+                    Profile
+                  </li>
+                  {role ? (
+                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
+                      Admin
+                    </li>
+                  ) : null}
+                  <Link to={`/history/${idUser}`}>
+                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
+                      History
+                    </li>
+                  </Link>
+                  <Link to={"/libraries"}>
+                    <li className="px-4 py-2 hover:bg-gray-300 cursor-pointer">
+                      Libraries
+                    </li>
+                  </Link>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-300 cursor-pointer"
+                    onClick={() => {
+                      hanhdleLogout();
+                    }}
+                  >
+                    Logout
+                  </li>
                 </ul>
               </div>
             )}

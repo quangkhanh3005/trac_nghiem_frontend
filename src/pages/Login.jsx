@@ -31,8 +31,10 @@ const Login = () => {
           theme: "light",
           transition: Bounce,
         });
-        const userid=response.data.id;
-        sessionStorage.setItem("idUser",userid);
+        const userid = response.data.id;
+        const role = response.data.role;
+        sessionStorage.setItem("role", role);
+        sessionStorage.setItem("idUser", userid);
         setTimeout(() => navigate("/"), 2000);
       }
     } catch (error) {

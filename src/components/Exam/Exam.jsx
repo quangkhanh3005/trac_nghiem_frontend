@@ -13,6 +13,7 @@ export default function Exam() {
   const [listAnswer, setListAnswer] = useState({});
   const [time, setTime] = useState(10);
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { idQuiz } = useParams();
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -29,31 +30,11 @@ export default function Exam() {
       }
     };
     fetchList();
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          handleTimeUp();
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+  }, [idQuiz]);
 
   const handleTimeUp = () => {
-    if (!isTimeUp) {
+    if (!isTimeUp && !isSubmitted) {
       setIsTimeUp(true);
-      const autoSubmitTimer = setTimeout(() => {
-        setIsTimeUp(false);
-        handleSubmit();
-      }, 2000);
-      return () => clearTimeout(autoSubmitTimer);
     }
   };
 
@@ -69,7 +50,9 @@ export default function Exam() {
   };
 
   const handleSubmit = async () => {
-    // Tạo mảng answers từ tất cả câu hỏi trong listQuestion
+    if (isSubmitted) return;
+
+    setIsSubmitted(true);
     const answersArray = listQuestion.map((question) => ({
       idQuestion: question.id,
       idAnswerSelected: listAnswer[question.id] || null,
@@ -77,18 +60,15 @@ export default function Exam() {
 
     const submissionData = {
       idQuiz: idQuiz || 1,
-      idUser: 1, // Thêm idUser vào body
+      idUser: 1,
       answers: answersArray,
     };
-
-    console.log("Dữ liệu gửi đi:", submissionData);
 
     try {
       const response = await axios.post(
         "http://localhost:8080/quiz/submit",
         submissionData
       );
-      console.log("Nộp bài thành công:", response.data);
       toast.success("Nộp bài thành công!", {
         position: "top-center",
         autoClose: 2000,
@@ -100,6 +80,7 @@ export default function Exam() {
         position: "top-center",
         autoClose: 2000,
       });
+      setIsSubmitted(false);
     }
     setIsTimeUp(false);
   };
@@ -114,24 +95,26 @@ export default function Exam() {
   };
 
   return (
-    <div className="bg-gray-200 p-8 grid grid-cols-12 gap-4">
-      <div className="col-span-9 h-screen overflow-y-auto no-scrollbar">
-        <ListQuestion
-          listQuestion={listQuestion}
-          onAnswerSelect={handleAnswerSelect}
-          listAnswer={listAnswer}
-          currentQuestionIndex={currentQuestionIndex}
-          onPrev={() =>
-            setCurrentQuestionIndex((prev) => Math.max(prev - 1, 0))
-          }
-          onNext={() =>
-            setCurrentQuestionIndex((prev) =>
-              Math.min(prev + 1, listQuestion.length - 1)
-            )
-          }
-        />
+    <div className="bg-gray-100 p-2 md:p-4 flex flex-col md:flex-row gap-4 min-h-screen">
+      <div className="w-full md:w-3/4 flex flex-col flex-grow overflow-hidden">
+        <div className="flex-grow">
+          <ListQuestion
+            listQuestion={listQuestion}
+            onAnswerSelect={handleAnswerSelect}
+            listAnswer={listAnswer}
+            currentQuestionIndex={currentQuestionIndex}
+            onPrev={() =>
+              setCurrentQuestionIndex((prev) => Math.max(prev - 1, 0))
+            }
+            onNext={() =>
+              setCurrentQuestionIndex((prev) =>
+                Math.min(prev + 1, listQuestion.length - 1)
+              )
+            }
+          />
+        </div>
       </div>
-      <div className="col-span-3 sticky top-0 h-screen">
+      <div className="w-full md:w-1/4 md:h-screen md:sticky top-0">
         <Sidebar
           listQuestion={listQuestion}
           answeredQuestions={answeredQuestions}
@@ -141,25 +124,6 @@ export default function Exam() {
           currentQuestionIndex={currentQuestionIndex}
         />
       </div>
-
-      {isTimeUp && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3 className="text-lg font-semibold mb-4">Hết thời gian!</h3>
-            <p className="mb-4">Bài của bạn sẽ tự động gửi sau 2 giây.</p>
-            <button
-              onClick={() => {
-                handleModalSubmit();
-              }}
-              className="modal-button w-full"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
-
-      <ToastContainer />
     </div>
   );
 }

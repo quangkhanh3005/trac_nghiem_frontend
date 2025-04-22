@@ -57,27 +57,10 @@ const Header = () => {
 
         {/* Nút Tạo */}
         <div className="relative group flex justify-center items-center w-1/3">
-          <div className="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold cursor-pointer transition duration-300 group-hover:bg-blue-700 group-hover:rotate-2 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-blue-400/50 z-30 relative">
-            Tạo
-          </div>
-          {/* Tia sáng trái */}
-          <div
-            className={`absolute top-1/2 left-1/2 w-40 h-1 bg-yellow-400 rounded-full origin-right z-10 -translate-y-1/2 opacity-0 beam-left`}
-          />
-
-          {/* Tia sáng phải */}
-          <div
-            className={`absolute top-1/2 left-1/2 w-40 h-1 bg-yellow-400 rounded-full origin-left z-10 -translate-y-1/2 opacity-0 beam-right`}
-          />
-          <Link
-            to="/create-topic"
-            className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[-50%] opacity-0 group-hover:translate-x-[-270px] group-hover:opacity-100 transition-all duration-700 ease-out delay-200 bg-green-500 text-white px-4 py-2 rounded-full text-sm shadow-lg z-20"
-          >
-            Tạo Topic
-          </Link>
           <Link
             to="/create-quiz"
-            className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[50%] opacity-0 group-hover:translate-x-[200px] group-hover:opacity-100 transition-all duration-700 ease-out delay-200 bg-purple-600 text-white px-4 py-2 rounded-full text-sm shadow-lg z-20"
+            className="absolute  bg-purple-600
+              text-white px-8 py-4 rounded-lg text-lg shadow-lg"
           >
             Tạo Quiz
           </Link>

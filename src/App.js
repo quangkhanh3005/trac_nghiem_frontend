@@ -15,7 +15,6 @@ import ResultExam from "./pages/ResultExam";
 
 // Admin Pages
 import AdminPage from "./pages/Admin/AdminPage";
-import QuizzPageAdmin from "./pages/Admin/QuizzPageAdmin";
 
 // Components
 import PrivateRoute from "./components/PrivateRoute";
@@ -160,14 +159,6 @@ function App() {
           element={
             <PrivateRouteAdmin>
               <AdminPage />
-            </PrivateRouteAdmin>
-          }
-        />
-        <Route
-          path="/admin/quizz"
-          element={
-            <PrivateRouteAdmin>
-              <QuizzPageAdmin />
             </PrivateRouteAdmin>
           }
         />

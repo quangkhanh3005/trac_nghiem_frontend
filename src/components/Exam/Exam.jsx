@@ -11,7 +11,7 @@ export default function Exam() {
   const [listQuestion, setListQuestion] = useState([]);
   const [answeredQuestions, setAnsweredQuestions] = useState({});
   const [listAnswer, setListAnswer] = useState({});
-  const [time, setTime] = useState(60);
+  const [time, setTime] = useState();
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { idQuiz } = useParams();
@@ -25,7 +25,8 @@ export default function Exam() {
         const response = await axios.get(
           `http://localhost:8080/question/id-quiz/${idQuiz}`
         );
-        setListQuestion(response.data);
+        setListQuestion(response.data.questions);
+        setTime(response.data.time * 60);
       } catch (error) {
         console.log("Loading câu hỏi thất bại", error);
       }

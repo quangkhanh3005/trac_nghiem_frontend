@@ -3,7 +3,7 @@ import UserLayout from "../../layouts/UserLayout";
 import { API_URL } from "../../config";
 import axios from "axios";
 import TopicModal from "./TopicModal";
-
+import AdminLayout from "../../layouts/AdminLayout";
 export default function AdminPage() {
   const [topics, setTopics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -105,7 +105,7 @@ export default function AdminPage() {
   };
 
   return (
-    <UserLayout>
+    <AdminLayout>
       <div className="p-6">
         <h2 className="text-xl mb-4 font-bold text-center w-full">
           Danh sách Topic
@@ -161,6 +161,6 @@ export default function AdminPage() {
         setTopicName={setTopicName}
         editingTopic={editingTopic}
       />
-    </UserLayout>
+    </AdminLayout>
   );
 }

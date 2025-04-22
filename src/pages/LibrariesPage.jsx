@@ -75,7 +75,7 @@ const LibrariesPage = () => {
                     Xem Chi Tiết
                   </button>
                   <button
-                    onClick={() => navigate(`/quiz/edit/${quiz.id}`)}
+                    onClick={() => navigate(`/question/id-quiz/${quiz.id}`)}
                     className="bg-yellow-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-yellow-600 transition w-full"
                   >
                     Chỉnh Sửa

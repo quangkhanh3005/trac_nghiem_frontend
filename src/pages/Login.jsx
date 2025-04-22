@@ -33,8 +33,12 @@ const Login = () => {
         });
         const userid = response.data.id;
         const role = response.data.role;
+        const username = response.data.username;
+        const email = response.data.email;
         sessionStorage.setItem("role", role);
         sessionStorage.setItem("idUser", userid);
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("email", email);
         setTimeout(() => navigate("/"), 2000);
       }
     } catch (error) {

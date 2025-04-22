@@ -1,0 +1,31 @@
+/* Định nghĩa animation cho tia sáng */
+@keyframes beam-left {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 1;
+  }
+}
+
+@keyframes beam-right {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Áp dụng animation cho các tia sáng khi hover */
+.group:hover .beam-left {
+  animation: beam-left 0.5s forwards;
+}
+
+.group:hover .beam-right {
+  animation: beam-right 0.5s forwards;
+}

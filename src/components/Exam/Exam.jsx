@@ -11,11 +11,12 @@ export default function Exam() {
   const [listQuestion, setListQuestion] = useState([]);
   const [answeredQuestions, setAnsweredQuestions] = useState({});
   const [listAnswer, setListAnswer] = useState({});
-  const [time, setTime] = useState(10);
+  const [time, setTime] = useState(60);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { idQuiz } = useParams();
   const navigate = useNavigate();
+  const idUser = sessionStorage.getItem("idUser");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   useEffect(() => {
@@ -31,6 +32,30 @@ export default function Exam() {
     };
     fetchList();
   }, [idQuiz]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          handleTimeUp();
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+  useEffect(() => {
+    if (isTimeUp) {
+      const timeout = setTimeout(() => {
+        handleSubmit();
+      }, 2000); // 2 giây
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isTimeUp]);
 
   const handleTimeUp = () => {
     if (!isTimeUp && !isSubmitted) {
@@ -60,7 +85,7 @@ export default function Exam() {
 
     const submissionData = {
       idQuiz: idQuiz || 1,
-      idUser: 1,
+      idUser: idUser,
       answers: answersArray,
     };
 
@@ -69,10 +94,13 @@ export default function Exam() {
         "http://localhost:8080/quiz/submit",
         submissionData
       );
+      console.log("dữ liệu gửi đi", submissionData);
+      console.log("Điểm", response.data);
+      sessionStorage.setItem("result", JSON.stringify(response.data));
       toast.success("Nộp bài thành công!", {
         position: "top-center",
         autoClose: 2000,
-        onClose: () => navigate("/"),
+        onClose: () => navigate("/ResultExam"),
       });
     } catch (error) {
       console.log("Nộp bài thất bại:", error);
@@ -124,6 +152,25 @@ export default function Exam() {
           currentQuestionIndex={currentQuestionIndex}
         />
       </div>
+
+      {isTimeUp && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 className="text-lg font-semibold mb-4">Hết thời gian!</h3>
+            <p className="mb-4">Bài của bạn sẽ tự động gửi sau 2 giây.</p>
+            <button
+              onClick={() => {
+                handleModalSubmit();
+              }}
+              className="modal-button w-full"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      <ToastContainer />
     </div>
   );
 }

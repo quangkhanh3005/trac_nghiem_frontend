@@ -49,16 +49,16 @@ const TopicQuizListPage = () => {
                   <h2 className="text-lg sm:text-xl font-bold">{quiz.title}</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
                     <div className="font-medium text-sm sm:text-base">
-                       Chủ đề: {quiz.topic.name}
+                      Chủ đề: {quiz.topic.name}
                     </div>
                     <div className="font-medium text-sm sm:text-base">
-                       Thời gian: {quiz.time} phút
+                      Thời gian: {quiz.time} phút
                     </div>
                     <div className="font-medium text-sm sm:text-base">
-                       Số câu: {quiz.totalQuestions}
+                      Số câu: {quiz.totalQuestions}
                     </div>
                     <div className="font-medium text-sm sm:text-base">
-                       Người tạo: {quiz.user.username}
+                      Người tạo: {quiz.user.username}
                     </div>
                   </div>
                 </div>

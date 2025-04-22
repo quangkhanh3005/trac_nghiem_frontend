@@ -26,7 +26,7 @@ const Question = () => {
   const fetchQuestion = async () => {
     try {
       const res = await axios.get(`${API_URL}/question/id-quiz/${idQuiz}`);
-      setQuestion(res.data);
+      setQuestion(res.data.questions);
     } catch (error) {
       console.error("Lỗi question: ", error);
     }

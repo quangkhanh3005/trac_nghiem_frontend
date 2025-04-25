@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { API_URL } from "../config";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserLayout from "../layouts/UserLayout";
 
 const EditQuestion = () => {
@@ -15,7 +15,8 @@ const EditQuestion = () => {
   const [correctIndex, setCorrectIndex] = useState(null);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const { id } = useParams();
+  const { id, idQuiz } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -95,6 +96,7 @@ const EditQuestion = () => {
       });
 
       alert("Cập nhật câu hỏi thành công!");
+      navigate(`/question/id-quiz/${idQuiz}`);
     } catch (error) {
       console.error("Lỗi khi cập nhật câu hỏi:", error);
       alert("Có lỗi xảy ra khi cập nhật.");

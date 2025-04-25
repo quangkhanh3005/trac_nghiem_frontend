@@ -137,7 +137,7 @@ function App() {
           }
         />
         <Route
-          path="/edit-question/:id"
+          path="/edit-question/:idQuiz/:id"
           element={
             <PrivateRoute>
               <EditQuestion />

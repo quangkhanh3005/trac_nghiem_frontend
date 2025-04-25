@@ -160,7 +160,7 @@ const Question = () => {
                       </button>
                       <button
                         className="text-sm text-blue-600 hover:underline"
-                        onClick={() => navigate(`/edit-question/${q.id}`)}
+                        onClick={() => navigate(`/edit-question/${idQuiz}/${q.id}`)}
                       >
                         Chỉnh sửa
                       </button>

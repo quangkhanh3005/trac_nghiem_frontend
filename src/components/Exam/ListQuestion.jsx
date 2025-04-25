@@ -46,13 +46,13 @@ export default function ListQuestion({
         {item.img && item.img !== "" && (
           <div className="mb-4 sm:mb-6 flex justify-center">
             <img
-              src={`http://localhost:8080/upload/${item.img}`}
+              src={`https://test-be-j2vt.onrender.com/upload/${item.img}`}
               className="max-h-48 sm:max-h-64 w-auto rounded-lg shadow-md object-contain"
               alt={`Hình ảnh cho câu hỏi ${currentQuestionIndex + 1}`}
               onError={(e) => {
                 e.target.style.display = "none";
                 console.error(
-                  `Không tải được ảnh: http://localhost:8080${item.image}`
+                  `Không tải được ảnh: https://test-be-j2vt.onrender.com${item.image}`
                 );
               }}
             />

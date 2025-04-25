@@ -20,10 +20,13 @@ const Profile = () => {
     console.log(email);
     console.log(username);
     try {
-      await axios.put(`http://localhost:8080/user/information/${idUser}`, {
-        email: email,
-        username: username,
-      });
+      await axios.put(
+        `https://test-be-j2vt.onrender.com/user/information/${idUser}`,
+        {
+          email: email,
+          username: username,
+        }
+      );
       sessionStorage.setItem("username", username);
       sessionStorage.setItem("email", email);
       alert("Cập nhật thông tin thành công!");

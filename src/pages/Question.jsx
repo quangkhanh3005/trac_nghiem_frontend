@@ -75,7 +75,7 @@ const Question = () => {
               <img
                 src={
                   quiz.image
-                    ? `http://localhost:8080/upload/${quiz.image}`
+                    ? `https://test-be-j2vt.onrender.com/upload/${quiz.image}`
                     : "/logo.png"
                 }
                 alt={quiz.title}
@@ -125,7 +125,7 @@ const Question = () => {
                       </p>
                       {q.image && (
                         <img
-                          src={`http://localhost:8080/upload/${q.img}`}
+                          src={`https://test-be-j2vt.onrender.com/upload/${q.img}`}
                           alt="question"
                           className="mt-4 w-full sm:w-36 h-24 object-cover rounded-lg"
                         />

@@ -23,7 +23,7 @@ export default function Exam() {
     const fetchList = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/question/id-quiz/${idQuiz}`
+          `https://test-be-j2vt.onrender.com/question/id-quiz/${idQuiz}`
         );
         setListQuestion(response.data.questions);
         setTime(response.data.time * 60);
@@ -92,7 +92,7 @@ export default function Exam() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/quiz/submit",
+        "https://test-be-j2vt.onrender.com/quiz/submit",
         submissionData
       );
       console.log("dữ liệu gửi đi", submissionData);

@@ -17,7 +17,7 @@ const CreateQuiz = () => {
   });
   useEffect(() => {
     axios
-      .get("http://localhost:8080/topic")
+      .get("https://test-be-j2vt.onrender.com/topic")
       .then((response) => {
         setTopics(response.data);
       })
@@ -56,7 +56,7 @@ const CreateQuiz = () => {
     }
 
     axios
-      .post("http://localhost:8080/quiz/create", formData, {
+      .post("https://test-be-j2vt.onrender.com/quiz/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

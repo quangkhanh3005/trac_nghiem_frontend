@@ -30,7 +30,9 @@ const EditQuestion = () => {
         }
 
         if (data.img) {
-          setImagePreview(`http://localhost:8080/upload/${data.img}`);
+          setImagePreview(
+            `https://test-be-j2vt.onrender.com/upload/${data.img}`
+          );
         }
       } catch (error) {
         console.error("Lỗi khi tải câu hỏi:", error);
